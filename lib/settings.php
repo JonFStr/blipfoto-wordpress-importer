@@ -27,12 +27,14 @@ class blipfoto_importer_settings {
 	}
 
 	function validate( $inputs ) {
-		$new = array();
+		$new = $this->defaults();
 		if ( $inputs ) {
 			foreach ( $inputs as $k => $v ) {
 				$new[$k] = wp_kses( $v, array() );
+                error_log($k . "=>" . $v);
 				if ( ! $new[$k] ) {
-					unset( $new[$k] );
+					#unset( $new[$k] );
+                    error_log($k . "=>" . $v);
 				}
 			}
 		}
