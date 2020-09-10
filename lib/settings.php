@@ -40,7 +40,10 @@ class blipfoto_importer_settings {
         $new = $this->defaults();
         if ( $inputs ) {
             foreach ( $inputs as $k => $v ) {
-                $new[$k] = wp_kses( $v, array() );
+                if($k !== "keep-tags") //keep-tags option uses html, dont strip it
+                    $new[$k] = wp_kses( $v, array() );
+                else
+                    $new[$k] = $v;
                 if ( ! $new[$k] ) {
                     unset( $new[$k] );
                 }
@@ -69,6 +72,7 @@ class blipfoto_importer_settings {
             'post-category' => '',
             'post-status'   => 'draft',
             'auto-insert'   => 0,
+            'keep-tags'     => '*',
             'num-entries'   => 25
             );
     }
@@ -202,6 +206,13 @@ class blipfoto_importer_settings {
                             <td>
                                 <input name="<?php echo $this->option(); ?>[auto-insert]" type="checkbox" value="1" <?php checked( $opts['auto-insert'] ); ?>>
                                 <p class="description">Each image is automatically set to be the post's 'featured image'. If you tick this option, the image will also be inserted at the beginning of the post content. You probably don't want to tick this if your theme automatically displays featured images.</p>
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <th scope="row">Keep formatting</th>
+                            <td>
+                                <input name="<?php echo $this->option(); ?>[keep-tags]" class="regular-text" type="text" value="<?php echo $opts['keep-tags']; ?>">
+                                <p class="description">A list of HTML formatting tags which should be kept in the post content. "*", if nothing should be stripped.</p>
                             </td>
                         </tr>
                         <tr valign="top">

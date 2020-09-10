@@ -92,8 +92,10 @@ class blipfoto_importer_main {
                             if ( ! $title = $entry->data( 'entry.title' ) ) {
                                 $title = 'Untitled';
                             }
-                            $content = $entry->data( 'details.description_html' );
-                            $img_url = $entry->data( 'image_urls.original' );
+                            $content = $entry->data('details.description_html');
+                            if(blipfoto_importer::option('keep-tags') !== "*")
+                                $content = strip_tags($content, blipfoto_importer::option('keep-tags'));
+                            $img_url = $entry->data( 'image_urls.stdres' );
                             error_log(print_r($entry->data('image_urls'), true));
                             $date    = $entry->data( 'entry.date' ) . ' 00:00:00';
                             $post_data = array(
