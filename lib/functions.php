@@ -17,7 +17,7 @@ class blipfoto_importer {
     }
 
     static function options_saved() {
-        return ( blipfoto_importer::option( 'client-id' ) and blipfoto_importer::option( 'client-secret' ) and blipfoto_importer::get_oauth() );
+        return ( blipfoto_importer::option( 'client-id' ) and blipfoto_importer::option( 'client-secret' ) and blipfoto_importer::oauth() );
     }
 
     static function options() {

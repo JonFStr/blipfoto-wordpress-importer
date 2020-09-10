@@ -104,6 +104,8 @@ class blipfoto_importer_main {
                                 'post_title'    => $title,
                                 'post_content'  => $content
                             );
+                            if(blipfoto_importer::option('post-category'))
+                                $post_data['post_category'] = array(get_cat_ID(blipfoto_importer::option('post-category')));
                             if ( $id = wp_insert_post( $post_data ) ) {
                                 add_action( 'add_attachment', array( $this, 'set_featured_image' ) );
                                 media_sideload_image( $img_url, $id, $title );

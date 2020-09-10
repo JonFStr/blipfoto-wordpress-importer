@@ -50,11 +50,11 @@ class blipfoto_importer_settings {
     }
 
     function get() {
-        if ( ! $opts = get_option( $this->option() ) ) {
-            $opts = $this->defaults();
-            $this->update( $opts );
-        }
-        return $opts;
+        $def_opts = $this->defaults();
+        if( ! $set_opts = get_option( $this->option() ))
+            return $def_opts;
+        $ret_opts = array_merge($def_opts, $set_opts);
+        return $ret_opts;
     }
 
     function update( $opts ) {
@@ -66,6 +66,7 @@ class blipfoto_importer_settings {
             'client-id'     => '',
             'client-secret' => '',
             'post-type'     => 'post',
+            'post-category' => '',
             'post-status'   => 'draft',
             'auto-insert'   => 0,
             'num-entries'   => 25
@@ -84,13 +85,9 @@ class blipfoto_importer_settings {
 
     // OAUTH Functions
 
-    function defaults_oauth() {
-        return "";
-    }
-
     function get_oauth() {
         if( ! $opts = get_option($this->NAME_OPTION_OAUTH)) {
-            $opts = $this->defaults_oauth();
+            $opts = "";
             update_option ( $this->NAME_OPTION_OAUTH, $opts);
         }
         return $opts;
@@ -129,7 +126,7 @@ class blipfoto_importer_settings {
                 <li>Click <em>Create new app</em>.</li>
                 <li>You will now be shown your <em>client ID</em> and <em>client secret</em>. Copy and paste these into the fields below, save the settings once, click "Authorize WordPress" and follow the steps on the opening webiste.</li>
                 <li>set the other settings as required and click <em>Save settings</em>.</li>
-                <li>When you\'re done, you can <a href="<?php echo admin_url( 'tools.php?page=blipfoto-import' ); ?>">run the importer</a>.</li>
+                <li>When you’re done, you can <a href="<?php echo admin_url( 'tools.php?page=blipfoto-import' ); ?>">run the importer</a>.</li>
             </ol>
             <form method="post" action="options.php">
                 <?php settings_fields( $this->option() ); ?>
@@ -167,6 +164,18 @@ class blipfoto_importer_settings {
                             <td>
                                 <input name="<?php echo $this->option(); ?>[post-type]" class="regular-text" type="text" value="<?php echo $opts['post-type']; ?>">
                                 <p class="description">The post type you wish to use for your entries.</p>
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <th scope="row">Post category</th>
+                            <td>
+                                <input name="<?php echo $this->option(); ?>[post-category]" class="regular-text" type="text" value="<?php echo $opts['post-category']; ?>">
+                <?php
+                if($opts['post-category'] && get_cat_ID($opts['post-category']) === 0) {
+                    echo '<p style="color:red">This category does not exist.</p>';
+                }
+                ?>
+                                <p class="description">The category to which all downloaded posts should be automatically assigned.</p>
                             </td>
                         </tr>
                         <tr valign="top">
