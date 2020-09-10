@@ -52,8 +52,9 @@ class OAuth {
 			'scope'			=> $scope,
 			'state'			=> $state,
 		));
-		header('Location: ' . $url);
-		exit;
+		#header('Location: ' . $url);
+		#exit;
+        return $url;
 	}
 
 	/**
