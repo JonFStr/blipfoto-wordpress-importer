@@ -17,7 +17,7 @@ class blipfoto_importer {
     }
 
     static function options_saved() {
-        return ( blipfoto_importer::option( 'username' ) and blipfoto_importer::option( 'client-id' ) and blipfoto_importer::option( 'client-secret' ) and blipfoto_importer::option( 'access-token' ) );
+        return ( blipfoto_importer::option( 'client-id' ) and blipfoto_importer::option( 'client-secret' ) and blipfoto_importer::get_oauth() );
     }
 
     static function options() {
@@ -33,9 +33,7 @@ class blipfoto_importer {
     static function new_client() {
         $token = blipfoto_importer::oauth();
         if(! $token) {
-            //$token = blipfoto_importer::option('access-token');
             $token = blipfoto_importer::option('client-id');
-            error_log("THIS IS NOT GOOD");
         }
         return new Blipfoto\Api\Client( blipfoto_importer::option( 'client-id' ), blipfoto_importer::option( 'client-secret' ), $token);
     }

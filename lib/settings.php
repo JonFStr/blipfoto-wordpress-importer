@@ -63,10 +63,8 @@ class blipfoto_importer_settings {
 
     function defaults() {
         return array(
-            'username'      => '',
             'client-id'     => '',
             'client-secret' => '',
-            'access-token'  => '',
             'post-type'     => 'post',
             'post-status'   => 'draft',
             'auto-insert'   => 0,
@@ -123,26 +121,20 @@ class blipfoto_importer_settings {
             <h1>Blipfoto Importer Settings</h1>
             <h3>How to grant access to your Blipfoto account</h3>
             <ol>
-                <li>Go to your <a href="https://www.blipfoto.com/settings/profile" target="_blank">Blipfoto profile page</a> to find out your username, and enter it in the <em>username</em> field below.</li>
                 <li>Go to the <a href="https://www.blipfoto.com/developer/apps" target="_blank">Blipfoto apps page</a> and click the <em>Create a new app</em> button.</li>
                 <li>Give it any name you wish (e.g. <em>My website</em>).</li>
                 <li>Make sure <em>Type</em> is set to <em>Web application</em>.</li>
                 <li>Enter the URL of your website (most likely <em><?php echo home_url(); ?></em>) in the <em>Website</em> field.</li>
                 <li>The <em>Redirect URI</em> field should be left blank.</li>
                 <li>Click <em>Create new app</em>.</li>
-                <li>You will now be shown your <em>client ID</em>, <em>client secret</em> and <em>access token</em>. Copy and paste these into the fields below, set the other settings as required and click <em>Save settings</em>.</li>
+                <li>You will now be shown your <em>client ID</em> and <em>client secret</em>. Copy and paste these into the fields below, save the settings once, click "Authorize WordPress" and follow the steps on the opening webiste.</li>
+                <li>set the other settings as required and click <em>Save settings</em>.</li>
                 <li>When you\'re done, you can <a href="<?php echo admin_url( 'tools.php?page=blipfoto-import' ); ?>">run the importer</a>.</li>
             </ol>
             <form method="post" action="options.php">
                 <?php settings_fields( $this->option() ); ?>
                 <table class="form-table">
                     <tbody>
-                        <tr valign="top">
-                            <th scope="row">Username</th>
-                            <td>
-                                <input name="<?php echo $this->option(); ?>[username]" type="text" value="<?php echo $opts['username']; ?>">
-                            </td>
-                        </tr>
                         <tr valign="top">
                             <th scope="row">Client ID</th>
                             <td>
@@ -156,13 +148,7 @@ class blipfoto_importer_settings {
                             </td>
                         </tr>
                         <tr valign="top">
-                            <th scope="row">Access token</th>
-                            <td>
-                                <input name="<?php echo $this->option(); ?>[access-token]" class="regular-text" type="text" value="<?php echo $opts['access-token']; ?>">
-                            </td>
-                        </tr>
-                        <tr valign="top">
-                        <th scope="row">OAuth2 Authentication</th>
+                            <th scope="row">OAuth2 Authentication</th>
                             <td>
                                 <p class="description">
                 <?php
