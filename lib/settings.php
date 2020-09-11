@@ -68,6 +68,9 @@ class blipfoto_importer_settings {
         return array(
             'client-id'     => '',
             'client-secret' => '',
+            'orig-img'      => 0,
+            'orig-email'    => '',
+            'orig-passwd'   => '',
             'post-type'     => 'post',
             'post-category' => '',
             'post-status'   => 'draft',
@@ -160,7 +163,22 @@ class blipfoto_importer_settings {
                                 </p><br />
                                 <input class="button-primary" name="blipfoto-importer-oauthorize" type="button" value="Authorize WordPress" onclick="window.location.href='<?php echo $this->oauth->authorize(admin_url('options-general.php?page=blipfoto-importer-settings&oauth=redirect'), 'read'); ?>'">
                                 <input class="button-primary" name="blipfoto-importer-unoauthorize" type="button" value="Clear authorization" <?php if(!$this->get_oauth()) echo 'style="display:none;"'; ?> onclick="window.location.href='<?php echo admin_url('options-general.php?page=blipfoto-importer-settings&oauth=clear'); ?>'">
-                                <p class="description">Use OAuth2 authorization to autorize this website. This enables additional features like using the images in original size</p>
+                                <p class="description">Use OAuth2 authorization to autorize this website.</p>
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <th scope="row">Download Original image</th>
+                            <td>
+                                <input name="<?php echo $this->option(); ?>[orig-img]" type="checkbox" value="1" <?php checked( $opts['orig-img'] ); ?> onclick="document.getElementById('loginSettings').style.setProperty('display', this.checked ? '' : 'none');">
+                                <p class="description">Download the image in its original size. You need to be a Blipfoto member to do so.</p>
+                            </td>
+                        </tr>
+                        <tr valign="top" id="loginSettings" style="<?php if(!blipfoto_importer::option('orig-img')) echo 'display: none;'; ?>">
+                            <th scope="row">Login Details</th>
+                            <td>
+                                <input name="<?php echo $this->option(); ?>[orig-email]" class="regular-text" type="text" value="<?php echo $opts['orig-email']; ?>" placeholder="E-Mail">
+                                <input name="<?php echo $this->option(); ?>[orig-passwd]" class="regular-text" type="text" value="<?php echo $opts['orig-passwd']; ?>" placeholder="Password">
+                                <p class="description">In order to download the original images, you have to enter your email & password</p>
                             </td>
                         </tr>
                         <tr valign="top">
