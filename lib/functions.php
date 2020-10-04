@@ -17,8 +17,7 @@ class blipfoto_importer {
     }
 
     static function options_saved() {
-        return ( blipfoto_importer::option( 'client-id' ) and blipfoto_importer::option( 'client-secret' ) and blipfoto_importer::oauth() )
-            && (( ! blipfoto_importer::option('orig-img') ) || (blipfoto_importer::option('orig-email') && blipfoto_importer::option('orig-passwd')));
+        return ( blipfoto_importer::option( 'username' ) and blipfoto_importer::option( 'client-id' ) and blipfoto_importer::option( 'client-secret' ) and blipfoto_importer::option( 'access-token' ) );
     }
 
     static function options() {
@@ -26,13 +25,8 @@ class blipfoto_importer {
         return $blipfoto_importer_settings->get();
     }
 
-    static function oauth() {
-        global $blipfoto_importer_settings;
-        return $blipfoto_importer_settings->get_oauth();
-    }
-
     static function new_client() {
-        $token = blipfoto_importer::oauth();
+        $token = blipfoto_importer::option('access-token');
         if(! $token) {
             $token = blipfoto_importer::option('client-id');
         }
