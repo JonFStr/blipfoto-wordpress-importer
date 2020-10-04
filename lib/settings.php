@@ -138,7 +138,7 @@ class blipfoto_importer_settings {
                             <th scope="row">Login Details</th>
                             <td>
                                 <input name="<?php echo $this->option(); ?>[orig-email]" class="regular-text" type="text" value="<?php echo $opts['orig-email']; ?>" placeholder="E-Mail">
-                                <input name="<?php echo $this->option(); ?>[orig-passwd]" class="regular-text" type="text" value="<?php echo $opts['orig-passwd']; ?>" placeholder="Password">
+                                <input name="<?php echo $this->option(); ?>[orig-passwd]" class="regular-text" type="password" value="<?php echo $opts['orig-passwd']; ?>" placeholder="Password">
                                 <p class="description">In order to download the original images, you have to enter your email & password</p>
                             </td>
                         </tr>
